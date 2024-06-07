@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Portfolio Website</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/41bb8c057f.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- ------------------ Navbar ------------------ -->
+    <header id="header">
+      <div class="container">
+        <nav>
+          <img src="images/logo2.png" class="logo" />
+          <ul id="sideMenu">
+            <li><a href="#header">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <i class="fa-solid fa-xmark fas" onclick="CloseMenu()"></i>
+          </ul>
+          <i class="fa-solid fa-bars fas" onclick="OpenMenu()"></i>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ------------------ ABOUT ------------------ -->
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="aboutCol1">
+                    <img src="images/user.JPG" />
+                </div>
+                <div class="aboutCol2">
+                    <h1 class="subTitle">About Me</h1>
+                    <p>
+                        My passion for games, which started with arcade in my childhood,
+                        has evolved from playing games to developing games when I met
+                        Unity in 2021. I started to develop games for 1 year with the work
+                        I did on my own and the trainings I received. In 2022, I started
+                        to work as a game developer in the hypercasual sector. I take care
+                        to improve myself every day and follow new technologies and unity
+                        packages.
+                    </p>
+                    <div class="tabTitle">
+                        <p class="tabLinks activeLink" onclick="OpenTab('skills')">
+                            Skills
+                        </p>
+                        <p class="tabLinks" onclick="OpenTab('experience')">Experience</p>
+                        <p class="tabLinks" onclick="OpenTab('education')">Education</p>
+                    </div>
+                    <div class="tabContents activeTab" id="skills">
+                        <ul>
+                            <li><span>Unity</span><br />Game Development</li>
+                            <li><span>Web Development</span><br />Web App Development</li>
+                            <li>
+                                <span>App Development</span><br />Building Android/iOs apps
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tabContents" id="experience">
+                        <ul>
+                            <li>
+                                <span>2022 - Current</span><br />Game Developer at NiceTry
+                                Games
+                            </li>
+                            <li>
+                                <span>2021 - 2022</span><br />Machine Designer at SANPARK
+                            </li>
+                            <li>
+                                <span>06.2017 - 09.2017</span><br />Intern as Machine Designer
+                                at Altesa
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tabContents" id="education">
+                        <ul>
+                            <li>
+                                <span>2014 - 2017</span><br />Kocaeli University Mechatronic
+                                Engineering
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------------------ SERVICES ------------------ -->
+    <div id="services">
+      <div class="container">
+        <h1 class="subTitle">My Services</h1>
+        <div class="servicesList">
+          <div>
+            <i class="fa-solid fa-code"></i>
+            <h2>Game Development</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi,
+              voluptatem nostrum laboriosam ab possimus molestiae porro ducimus?
+              Unde quod reiciendis sunt ducimus beatae dolor, minima obcaecati!
+              At molestias vel asperiores?
+            </p>
+            <a href="#">Learn more</a>
+          </div>
+          <div>
+            <i class="fa-sharp fa-solid fa-crop"></i>
+            <h2>UI/UX Design</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi,
+              voluptatem nostrum laboriosam ab possimus molestiae porro ducimus?
+              Unde quod reiciendis sunt ducimus beatae dolor, minima obcaecati!
+              At molestias vel asperiores?
+            </p>
+            <a href="#">Learn more</a>
+          </div>
+          <div>
+            <i class="fa-brands fa-app-store"></i>
+            <h2>Web Design</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi,
+              voluptatem nostrum laboriosam ab possimus molestiae porro ducimus?
+              Unde quod reiciendis sunt ducimus beatae dolor, minima obcaecati!
+              At molestias vel asperiores?
+            </p>
+            <a href="#">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- PORTFOLIO ---------------- -->
+    <div id="portfolio">
+      <div class="container">
+        <h1 class="subTitle">My Work</h1>
+        <div class="workList">
+          <div class="work">
+            <img src="images/work-1.png" alt="" />
+            <div class="layer">
+              <h3>Social Media App</h3>
+              <p>
+                The app connects you the talented people around the world.
+                Download it from play store
+              </p>
+              <a href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>
+            </div>
+          </div>
+          <div class="work">
+            <img src="images/work-2.png" alt="" />
+            <div class="layer">
+              <h3>Music App</h3>
+              <p>
+                The app connects you the talented people around the world.
+                Download it from play store
+              </p>
+              <a href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>
+            </div>
+          </div>
+          <div class="work">
+            <img src="images/work-3.png" alt="" />
+            <div class="layer">
+              <h3>Online Shopping App</h3>
+              <p>
+                The app connects you the talented people around the world.
+                Download it from play store
+              </p>
+              <a href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn">See more</a>
+      </div>
+    </div>
+
+    <!-- ---------------- CONTACT ---------------- -->
+    <div id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="contanctLeft">
+            <h1 class="subTitle">Contact Me</h1>
+            <p><i class="fa-solid fa-paper-plane"></i>ibrahmcingi@gmail.com</p>
+            <p><i class="fa-solid fa-square-phone"></i>+905319857784</p>
+            <div class="socialIcons">
+              <a href="https://www.facebook.com/ibrahim.cingi.brs"
+                ><i class="fa-brands fa-facebook"></i
+              ></a>
+              <a href="https://www.instagram.com/ibrahimcngi/"
+                ><i class="fa-brands fa-instagram"></i
+              ></a>
+              <a href="https://www.linkedin.com/in/ibrahim-cingi/"
+                ><i class="fa-brands fa-linkedin"></i
+              ></a>
+              <a href="https://github.com/Roestee"
+                ><i class="fa-brands fa-github"></i
+              ></a>
+            </div>
+            <a href="" class="btn btn2">Download CV</a>
+          </div>
+          <div class="contanctRight">
+            <form action="">
+              <input type="text" name="Name" placeholder="Your Name" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+              />
+              <textarea
+                name="Message"
+                rows="6"
+                placeholder="Your Message"
+              ></textarea>
+              <button type="submit" class="btn btn2">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>Copyright @ Roestee.</p>
+      </div>
+    </div>
+
+    <script>
+      const tabLinks = document.getElementsByClassName("tabLinks");
+      const tabContents = document.getElementsByClassName("tabContents");
+
+      function OpenTab(tabName) {
+        for (tabLink of tabLinks) {
+          tabLink.classList.remove("activeLink");
+        }
+        for (tabContent of tabContents) {
+          tabContent.classList.remove("activeTab");
+        }
+
+        event.currentTarget.classList.add("activeLink");
+        document.getElementById(tabName).classList.add("activeTab");
+      }
+    </script>
+
+    <script>
+      let sidemenu = document.getElementById("sideMenu");
+      function OpenMenu() {
+        sidemenu.style.right = "0";
+      }
+      function CloseMenu() {
+        sidemenu.style.right = "-200px";
+      }
+    </script>
+  </body>
+</html>

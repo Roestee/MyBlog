@@ -1,0 +1,23 @@
+﻿@model MyWork
+
+<div id="portfolio">
+    <div class="container">
+        <h1 class="subTitle">My Work</h1>
+        <div class="workList">
+            @{
+                foreach (var work in Model.Works)
+                {
+                    <div class="work">
+                        <img src="@work.BackgroundImgUrl" alt=""/>
+                        <div class="layer">
+                            <h3>@work.Title</h3>
+                            <p>@work.Description</p>
+                            <a href="#">@work.WorkUrl</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <a href="#" class="btn">See more</a>
+    </div>
+</div>

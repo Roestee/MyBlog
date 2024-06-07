@@ -1,0 +1,14 @@
+﻿@model Home
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+@{
+    await Html.RenderPartialAsync("Components/_HomeLayoutSummary/Default", Model.Summary);
+    await Html.RenderPartialAsync("Components/_HomeLayoutAboutMe/Default", Model.AboutMe);
+    await Html.RenderPartialAsync("Components/_HomeLayoutMyService/Default", Model.MyService);
+    await Html.RenderPartialAsync("Components/_HomeLayoutMyWork/Default", Model.MyWork);
+    await Html.RenderPartialAsync("Components/_HomeLayoutContactMe/Default", Model.ContactMe);
+}

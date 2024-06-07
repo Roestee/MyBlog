@@ -1,0 +1,26 @@
+﻿<script>
+    const tabLinks = document.getElementsByClassName("tabLinks");
+    const tabContents = document.getElementsByClassName("tabContents");
+
+    function OpenTab(tabName) {
+        for (tabLink of tabLinks) {
+            tabLink.classList.remove("activeLink");
+        }
+        for (tabContent of tabContents) {
+            tabContent.classList.remove("activeTab");
+        }
+
+        event.currentTarget.classList.add("activeLink");
+        document.getElementById(tabName).classList.add("activeTab");
+
+        const sidemenu = document.getElementById("sideMenu");
+
+        function OpenMenu() {
+            sidemenu.style.right = "0";
+        }
+
+        function CloseMenu() {
+            sidemenu.style.right = "-200px";
+        }
+    }
+</script>

@@ -1,0 +1,64 @@
+﻿@model AboutMe
+
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="aboutCol1">
+                <img src="images/user.JPG" />
+            </div>
+            <div class="aboutCol2">
+                <h1 class="subTitle">About Me</h1>
+                <p>@Model.Description</p>
+                <div class="tabTitle">
+                    <p class="tabLinks activeLink" onclick="OpenTab('skills')">Skills</p>
+                    <p class="tabLinks" onclick="OpenTab('experience')">Experience</p>
+                    <p class="tabLinks" onclick="OpenTab('education')">Education</p>
+                </div>
+                <div class="tabContents activeTab" id="skills">
+                    <ul>
+                        @{
+                            foreach (var skill in Model.Skills)
+                            {
+                                <li class="d-flex flex-column gap-2">
+                                    <h6>@skill.Title</h6>
+                                    <p>@skill.Description</p>
+                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="@skill.Rate" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: @skill.Rate%"></div>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="tabContents" id="experience">
+                    <ul>
+                        @{
+                            foreach (var experience in Model.Experiences)
+                            {
+                                <li class="d-flex flex-column gap-2">
+                                    <span>@(experience.JobStartDate.ToShortDateString() + "-" + (experience.StillWorking ? "Current" : experience.JobEndDate.Value.ToShortDateString()))</span>
+                                    <h6>@experience.Title</h6>
+                                    <p>@experience.Description</p>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="tabContents" id="education">
+                    <ul>
+                        @{
+                            foreach (var education in Model.Educations)
+                            {
+                                <li class="d-flex flex-column gap-2">
+                                    <span>@(education.StartDate.ToShortDateString() + "-" + education.EndDate.ToShortDateString())</span>
+                                    <h6>@education.SchoolName</h6>
+                                    <p>@education.Title</p>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
