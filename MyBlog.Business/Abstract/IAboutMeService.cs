@@ -5,7 +5,6 @@ namespace MyBlog.Business.Abstract
 {
     public interface IAboutMeService
     {
-        Task<List<AboutMe>> GetAllAsync();
         Task<IDataResult> AddAsync(AboutMe aboutMe);
         Task<AboutMe> GetByIdAsync(int id);
         Task<IDataResult> UpdateAsync(AboutMe aboutMe);

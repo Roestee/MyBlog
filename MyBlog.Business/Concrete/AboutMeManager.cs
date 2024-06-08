@@ -1,4 +1,5 @@
-﻿using MyBlog.Business.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using MyBlog.Business.Abstract;
 using MyBlog.Core.Utilities.Results;
 using MyBlog.DataAccess.Abstract;
 using MyBlog.Entities;
@@ -12,11 +13,6 @@ namespace MyBlog.Business.Concrete
         public AboutMeManager(IAboutMeRepository aboutMeRepository)
         {
             _aboutMeRepository = aboutMeRepository;
-        }
-
-        public async Task<List<AboutMe>> GetAllAsync()
-        {
-            return await _aboutMeRepository.GetAllAsync();
         }
 
         public async Task<IDataResult> AddAsync(AboutMe aboutMe)
@@ -35,7 +31,13 @@ namespace MyBlog.Business.Concrete
 
         public async Task<AboutMe> GetByIdAsync(int id)
         {
-            return await _aboutMeRepository.GetByIdAsync(id);
+            var aboutMe = _aboutMeRepository.GetAllQueryable()
+                .Where(x => x.Id == id)
+                .Include(x=>x.Skills)
+                .Include(x=>x.Educations)
+                .Include(x=>x.Experiences);
+
+            return await aboutMe.FirstOrDefaultAsync();
         }
 
         public async Task<IDataResult> UpdateAsync(AboutMe aboutMe)

@@ -1,0 +1,21 @@
+﻿@model AboutMe
+
+<ol class="list-group list-group-numbered">
+    @foreach (var skill in Model.Skills)
+    {
+        <li class="list-group-item d-flex align-items-start pe-5 position-relative">
+            <div class="d-flex flex-column gap-2 w-100 ps-2">
+                <div class="fw-bold">@skill.Title</div>
+                <p class="mb-0">@skill.Description</p>
+                <div class="progress w-75 my-2" role="progressbar" style="height: 20px" aria-valuenow="@skill.Rate" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" style="width: @skill.Rate%">@skill.Rate%</div>
+                </div>
+                <button class="btn btn-danger border rounded-circle d-flex align-items-center justify-content-center position-absolute top-0 end-0 mt-2 me-2" style="width: 26px; height: 26px;"
+                        onclick="handleDeleteSkill(@skill.Id, @skill.AboutMeId)">
+                    <i class="fa-solid fa-x fa-xs text-light text-center"></i>
+                </button>
+            </div>
+        </li>
+    }
+</ol>
+

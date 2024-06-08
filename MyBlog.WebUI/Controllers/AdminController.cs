@@ -13,18 +13,23 @@ namespace MyBlog.WebUI.Controllers
         private readonly IHomeService _homeService;
         private readonly ISummaryService _summaryService;
         private readonly IAboutMeService _aboutMeService;
-
+        private readonly ISkillService _skillService;
+        private readonly IEducationService _educationService;
 
         public AdminController(
             ICompositeViewEngine viewEngine,
             IHomeService homeService,
             ISummaryService summaryService,
-            IAboutMeService aboutMeService )
+            IAboutMeService aboutMeService,
+            ISkillService skillService, 
+            IEducationService educationService)
         {
             _viewEngine = viewEngine;
             _homeService = homeService;
             _summaryService = summaryService;
             _aboutMeService = aboutMeService;
+            _skillService = skillService;
+            _educationService = educationService;
         }
 
         public IActionResult Index()
@@ -130,6 +135,56 @@ namespace MyBlog.WebUI.Controllers
             var result = await _aboutMeService.DeleteAsync(id);
             var data = await RenderPartialViewToString("Components/_AdminLayoutAboutMeModal/Default", new AboutMe { HomeId = 1 });
 
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSkill(Skill skill)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _skillService.AddAsync(skill);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutSkillList/Default", await _aboutMeService.GetByIdAsync(skill.AboutMeId));
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteSkill(int id, int aboutMeId)
+        {
+            var result = await _skillService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutSkillList/Default", await _aboutMeService.GetByIdAsync(aboutMeId));
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddEducation(Education education)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _educationService.AddAsync(education);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutEducationList/Default", await _aboutMeService.GetByIdAsync(education.AboutMeId));
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteEducation(int id, int aboutMeId)
+        {
+            var result = await _educationService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutEducationList/Default", await _aboutMeService.GetByIdAsync(aboutMeId));
             return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 

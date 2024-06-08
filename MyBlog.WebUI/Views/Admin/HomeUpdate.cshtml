@@ -21,7 +21,7 @@
                             await Html.RenderPartialAsync("Components/_AdminLayoutSummaryUpdate/Default", Model.Summary);
                     }
                 </div>
-                <div class="border border-top border-secondary-subtle mt-3"></div>
+                <div class="border border-top border-secondary-subtle mt-4"></div>
             </div>
         </div>
         <div class="row">
@@ -35,7 +35,7 @@
                             await Html.RenderPartialAsync("Components/_AdminLayoutAboutMeUpdate/Default", Model.AboutMe);
                     }
                 </div>
-                <div class="border border-top border-secondary-subtle mt-3"></div>
+                <div class="border border-top border-secondary-subtle mt-4"></div>
             </div>
         </div>
     </div>
@@ -44,7 +44,11 @@
 @section Scripts {
     <script>
         function handleAddSummary() {
-            $('#summaryModalForm').on('submit', function (e) {
+            const form = $('#summaryModalForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
                 e.preventDefault();
 
                 const formData = $(this).serialize();
@@ -68,11 +72,15 @@
                 });
             });
 
-            $('#summaryModalForm').submit();
+            form.submit();
         }
 
         function handleUpdateSummary() {
-            $('#summaryUpdateForm').on('submit', function (e) {
+            const form = $('#summaryUpdateForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
                 e.preventDefault();
 
                 const formData = $(this).serialize();
@@ -95,7 +103,7 @@
                 });
             });
 
-            $('#summaryUpdateForm').submit();
+            form.submit();
         }
 
         function handleDeleteSummary(id) {
@@ -119,7 +127,11 @@
 
     <script>
         function handleAddAboutMe() {
-            $('#aboutMeModalForm').on('submit', function (e) {
+            const form = $('#aboutMeModalForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
                 e.preventDefault();
 
                 const formData = $(this).serialize();
@@ -143,11 +155,15 @@
                 });
             });
 
-            $('#aboutMeModalForm').submit();
+            form.submit();
         }
 
         function handleUpdateAboutMe() {
-            $('#aboutMeUpdateForm').on('submit', function (e) {
+            const form = $('#aboutMeUpdateForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
                 e.preventDefault();
 
                 const formData = $(this).serialize();
@@ -170,7 +186,7 @@
                 });
             });
 
-            $('#aboutMeUpdateForm').submit();
+            form.submit();
         }
 
         function handleDeleteAboutMe(id) {
@@ -186,6 +202,108 @@
                 success: function (response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#aboutMeContainer").innerHTML = response.data;
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+
+        function handleAddSkill() {
+            const form = $('#skillModalForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddSkill", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#btnCloseSkillModal").click();
+                            document.querySelector("#skillContainer").innerHTML = response.data;
+                        }
+                        else {
+                            showValidationErrors("skillModalForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            form.submit();
+        }
+
+        function handleDeleteSkill(id, aboutMeId) {
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("aboutMeId", aboutMeId);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteSkill", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#skillContainer").innerHTML = response.data;
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+        
+        function handleAddEducation() {
+            const form = $('#educationModalForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddEducation", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#btnCloseEducationModal").click();
+                            document.querySelector("#educationContainer").innerHTML = response.data;
+                        }
+                        else {
+                            showValidationErrors("educationModalForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            form.submit();
+        }
+
+        function handleDeleteEducation(id, aboutMeId) {
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("aboutMeId", aboutMeId);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteEducation", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#educationContainer").innerHTML = response.data;
                 },
                 error: function (xhr, status, error) { }
             });

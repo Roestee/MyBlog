@@ -31,6 +31,8 @@ namespace MyBlog.Business.DependencyResolvers.Autofac
             builder.RegisterType<MyServiceManager>().As<IMyServiceService>();
             builder.RegisterType<MyWorkManager>().As<IMyWorkService>();
             builder.RegisterType<SummaryManager>().As<ISummaryService>();
+            builder.RegisterType<SkillManager>().As<ISkillService>();
+            builder.RegisterType<EducationManager>().As<IEducationService>();
         }
     }
 }

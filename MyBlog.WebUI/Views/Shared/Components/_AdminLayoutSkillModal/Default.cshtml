@@ -1,0 +1,38 @@
+﻿@model Skill
+
+<button type="button" class="btn btn-primary text-light px-4 py-2" data-bs-toggle="modal" data-bs-target="#addSkillModal">Yetenek Ekle</button>
+
+<div class="modal fade" id="addSkillModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Yetenek Ekleme</h1>
+                <button type="button" class="btn-close" id="btnCloseSkillModal" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="skillModalForm" class="d-flex flex-column gap-2">
+                    <input type="hidden" asp-for="AboutMeId" value="@Model.AboutMeId"></input>
+                    <div class="form-group">
+                        <label asp-for="Title" class="text-dark fw-bold">Başlık</label>
+                        <input type="text" class="form-control" asp-for="Title">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="text-dark fw-bold">Açıklama</label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Rate" class="text-dark fw-bold">Hakimiyet</label>
+                        <input type="number" asp-for="Rate" class="form-control" min="0" max="100">
+                        <span asp-validation-for="Rate" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" onclick="handleAddSkill()" class="btn btn-primary text-light">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
