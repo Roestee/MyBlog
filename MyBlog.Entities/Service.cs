@@ -11,14 +11,10 @@ namespace MyBlog.Entities
         [ForeignKey(nameof(MyService))]
         public int MyServicesId { get; set; }
 
-        [Column("NVARCHAR(50)")]
         [MaxLength(50, ErrorMessage = "Başlık 50 karakteri geçemez!")]
         public string Title { get; set; }
-
-        [Column("NVARCHAR(MAX)")]
         public string Description { get; set; }
 
-        [Column("NVARCHAR(100)")]
         [MaxLength(150, ErrorMessage = "Başlık 150 karakteri geçemez!")]
         public string Icon { get; set; }
 

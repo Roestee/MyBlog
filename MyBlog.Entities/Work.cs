@@ -11,11 +11,8 @@ namespace MyBlog.Entities
         [ForeignKey(nameof(MyWorks))]
         public int MyWorksId { get; set; }
 
-        [Column("NVARCHAR(50)")]
         [MaxLength(50, ErrorMessage = "Başlık 50 karakteri geçemez!")]
         public string Title { get; set; }
-
-        [Column("NVARCHAR(MAX)")]
         public string Description { get; set; }
 
         [MaxLength(150, ErrorMessage = "Başlık 150 karakteri geçemez!")]

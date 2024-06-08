@@ -7,8 +7,6 @@ namespace MyBlog.Entities
     {
         public int Id { get; set; }
         public int HomeId { get; set; }
-
-        [Column("NVARCHAR(MAX)")]
         public string Description { get; set; }
 
         public virtual Home Home { get; set; }

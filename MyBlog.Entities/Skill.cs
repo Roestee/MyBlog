@@ -10,11 +10,7 @@ namespace MyBlog.Entities
 
         [ForeignKey(nameof(AboutMe))]
         public int AboutMeId { get; set; }
-
-        [Column("NVARCHAR(60)")]
         public string Title { get; set; }
-
-        [Column("NVARCHAR(MAX)")]
         public string Description { get; set; }
 
         [Range(0,101)]
