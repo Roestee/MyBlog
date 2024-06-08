@@ -1,0 +1,28 @@
+﻿@model Summary
+
+<div class="d-flex flex-column gap-3">
+    <form method="POST" id="summaryUpdateForm" class="d-flex flex-column gap-2">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="HomeId" value="@Model.HomeId"></input>
+        <div class="row mx-0 mx-md-1 gap-2 align-items-center">
+            <label asp-for="FullName" class="col-12 col-md-4 col-xl-3 px-0 px-md-2 text-dark fw-bold">İsim Soyisim</label>
+            <div class="col-12 col-md-8 col-xl-9 text-dark w-md-auto px-0 d-flex flex-column">
+                <input type="text" asp-for="FullName" class="w-100 px-2 py-1" value="@Model.FullName">
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mx-0 mx-md-1 gap-2 align-items-center">
+            <label asp-for="JobPosition" class="col-12 col-md-4 col-xl-3 px-0 px-md-2 text-dark fw-bold">İş</label>
+            <div class="col-12 col-md-8 col-xl-9 text-dark w-md-auto px-0 d-flex flex-column">
+                <input type="text" asp-for="JobPosition" class="w-100 px-2 py-1" value="@Model.JobPosition">
+                <span asp-validation-for="JobPosition" class="text-danger"></span>
+            </div>
+            
+        </div>
+    </form>
+
+    <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+        <button type="button" onclick="handleUpdateSummary()" class="btn btn-warning text-light fw-bold px-4 py-2">Güncelle</button>
+        <button type="button" onclick="handleDeleteSummary(@Model.Id)" class="btn btn-danger text-light fw-bold px-5 py-2">Sil</button>
+    </div>
+</div>

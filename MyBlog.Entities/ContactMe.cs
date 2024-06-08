@@ -17,7 +17,7 @@ namespace MyBlog.Entities
         [MaxLength(150, ErrorMessage = "CV link'i 150 karakteri geçemez!")]
         public string CVUrl { get; set; }
 
-        public virtual Home Home { get; set; }
-        public virtual ICollection<SocialMedia> SocialMedias { get; set; }
+        public virtual Home? Home { get; set; }
+        public virtual ICollection<SocialMedia>? SocialMedias { get; set; }
     }
 }

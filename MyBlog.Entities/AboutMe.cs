@@ -9,10 +9,10 @@ namespace MyBlog.Entities
         public int HomeId { get; set; }
         public string Description { get; set; }
 
-        public virtual Home Home { get; set; }
-        public virtual ICollection<Skill> Skills { get; set; }
-        public virtual ICollection<Experience> Experiences { get; set; }
-        public virtual ICollection<Education> Educations { get; set; }
+        public virtual Home? Home { get; set; }
+        public virtual ICollection<Skill>? Skills { get; set; }
+        public virtual ICollection<Experience>? Experiences { get; set; }
+        public virtual ICollection<Education>? Educations { get; set; }
     }
 }
 

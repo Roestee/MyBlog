@@ -1,0 +1,129 @@
+﻿@model Home
+
+@{
+    ViewData["Title"] = "HomeUpdate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <input type="hidden" id="homeIdInput" value="@Model.Id" />
+  
+    <div class="border border-top border-dark mb-3"></div>
+    <div class="d-flex flex-column gap-4" id="homeContainer">
+        <div class="row">
+            <div class="col">
+                <h4 class="text-dark">Özet</h4>
+                <div id="summaryContainer">
+                    @{
+                        if (Model.Summary == null)
+                            await Html.RenderPartialAsync("Components/_AdminLayoutSummaryModal/Default", new Summary { HomeId = 1 });
+                        else
+                            await Html.RenderPartialAsync("Components/_AdminLayoutSummaryUpdate/Default", Model.Summary);
+                    }
+                </div>
+
+                <div class="border border-top border-secondary-subtle mt-3"></div>
+            </div>
+            <div class="col">
+                <h4 class="text-dark">Hakkımda</h4>
+                <div id="aboutMeContainer">
+                    @{
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function handleAddSummary() {
+            $('#summaryModalForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddSummary", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#btnCloseSummaryModal").click();
+                            document.querySelector("#summaryContainer").innerHTML = response.data;
+                        } 
+                        else {
+                            showValidationErrors("summaryModalForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            $('#summaryModalForm').submit();
+        }
+
+        function handleUpdateSummary() {
+            $('#summaryUpdateForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UpdateSummary", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#summaryContainer").innerHTML = response.data;
+                        } 
+                        else {
+                            showValidationErrors("summaryUpdateForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            $('#summaryUpdateForm').submit();
+        }
+
+        function handleDeleteSummary(id) {
+            const formData = new FormData();
+            formData.append("id", id);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteSummary", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#summaryContainer").innerHTML = response.data;
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+    </script>
+    
+    <script>
+        function showValidationErrors(id, errors) {
+            $(`#${id} span[data-valmsg-for]`).each(function () {
+                $(this).text('');
+            });
+
+            $.each(errors, function (key, errorMessages) {
+                const $span = $(`#${id} span[data-valmsg-for='${key}']`);
+                if ($span.length > 0) {
+                    $span.text(errorMessages.join(', '));
+                }
+            });
+        }
+    </script>
+}

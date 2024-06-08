@@ -30,6 +30,9 @@ namespace MyBlog.DataAccess.Concrete.EntityFrameworkCore.Mappings
             builder.HasOne(x => x.ContactMe)
                 .WithOne(x => x.Home)
                 .HasForeignKey<ContactMe>(x => x.HomeId);
+
+
+            builder.HasData(new Home { Id = 1 });
         }
     }
 }

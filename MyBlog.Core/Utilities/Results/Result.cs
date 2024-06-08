@@ -1,6 +1,6 @@
 ﻿namespace MyBlog.Core.Utilities.Results
 {
-    public abstract class Result : IResult
+    public abstract class Result : IDataResult
     {
         protected Result(bool success)
         {

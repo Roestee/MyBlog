@@ -1,0 +1,32 @@
+﻿@if (TempData["Message"] != null && TempData["MessageType"] != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let message = "@TempData["Message"]";
+            let messageType = "@TempData["MessageType"]";
+            userAlert(message, messageType);
+        });
+    </script>
+}
+
+<script>
+    function userAlert(message, messageType) {
+        switch (messageType) {
+        case "success":
+            toastr.success(message);
+            break;
+        case "info":
+            toastr.info(message);
+            break;
+        case "warning":
+            toastr.warning(message);
+            break;
+        case "error":
+            toastr.error(message);
+            break;
+        default:
+            toastr.info(message); // Varsayılan olarak info mesajı göster
+            break;
+        }
+    }
+</script>

@@ -17,6 +17,6 @@ namespace MyBlog.Entities
         [MaxLength(150, ErrorMessage = "Url 150 karakteri geçemez!")]
         public string Url { get; set; }
 
-        public virtual ContactMe ContactMe { get; set; }
+        public virtual ContactMe? ContactMe { get; set; }
     }
 }

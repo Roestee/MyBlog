@@ -33,5 +33,10 @@ namespace MyBlog.Business.Concrete
 
             return await home.FirstOrDefaultAsync();
         }
+
+        public async Task<List<Home>> GetAllAsync()
+        {
+            return await _homeRepository.GetAllAsync();
+        }
     }
 }

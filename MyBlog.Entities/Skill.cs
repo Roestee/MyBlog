@@ -16,6 +16,6 @@ namespace MyBlog.Entities
         [Range(0,101)]
         public int Rate { get; set; }
 
-        public virtual AboutMe AboutMe { get; set; }
+        public virtual AboutMe? AboutMe { get; set; }
     }
 }

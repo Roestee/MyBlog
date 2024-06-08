@@ -10,6 +10,6 @@ namespace MyBlog.Entities
         public string FullName { get; set; }
         public string JobPosition { get; set; }
 
-        public virtual Home Home { get; set; }
+        public virtual Home? Home { get; set; }
     }
 }

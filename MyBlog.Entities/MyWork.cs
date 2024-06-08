@@ -7,7 +7,7 @@ namespace MyBlog.Entities
         public int Id { get; set; }
         public int HomeId { get; set; }
 
-        public virtual Home Home { get; set; }
-        public virtual ICollection<Work> Works { get; set; }
+        public virtual Home? Home { get; set; }
+        public virtual ICollection<Work>? Works { get; set; }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model Summary
+
+<button type="button" class="btn btn-primary text-light px-4 py-2 mt-3" data-bs-toggle="modal" data-bs-target="#addSummaryModal">Özet Ekle</button>
+
+<div class="modal fade" id="addSummaryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Özet Ekleme</h1>
+                <button type="button" class="btn-close" id="btnCloseSummaryModal" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="summaryModalForm" class="d-flex flex-column gap-2">
+                    <input type="hidden" asp-for="HomeId" value="@Model.HomeId"></input>
+                    <div class="form-group">
+                        <label asp-for="FullName" class="text-dark fw-bold">İsim Soyisim</label>
+                        <input type="text" class="form-control" asp-for="FullName">
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="JobPosition" class="text-dark fw-bold">İş</label>
+                        <input type="text" asp-for="JobPosition" class="form-control">
+                        <span asp-validation-for="JobPosition" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" onclick="handleAddSummary()" class="btn btn-primary text-light">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>

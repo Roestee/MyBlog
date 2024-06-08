@@ -1,6 +1,6 @@
 ﻿namespace MyBlog.Core.Utilities.Results
 {
-    public interface IResult
+    public interface IDataResult
     {
         public bool Success { get; }
         public string Message { get; }

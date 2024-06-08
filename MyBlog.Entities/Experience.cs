@@ -18,6 +18,6 @@ namespace MyBlog.Entities
         public DateTime JobStartDate { get; set; }
         public DateTime? JobEndDate { get; set; }
 
-        public virtual AboutMe AboutMe { get; set; }
+        public virtual AboutMe? AboutMe { get; set; }
     }
 }
