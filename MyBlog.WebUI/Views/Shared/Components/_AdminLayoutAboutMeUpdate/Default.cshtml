@@ -1,0 +1,20 @@
+﻿@model AboutMe
+
+<div class="d-flex flex-column gap-3">
+    <form method="POST" id="aboutMeUpdateForm" class="d-flex flex-column gap-2">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="HomeId" value="@Model.HomeId"></input>
+        <div class="row mx-0 mx-md-1 gap-2 align-items-center">
+            <label asp-for="Description" class="col-12 col-md-4 col-xl-3 px-0 px-md-2 text-dark fw-bold">Açıklama</label>
+            <div class="col-12 col-md-8 col-xl-9 text-dark w-md-auto px-0 d-flex flex-column">
+                <textarea asp-for="Description" class="w-100 px-2 py-1">@Model.Description</textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+        <button type="button" onclick="handleUpdateAboutMe()" class="btn btn-warning text-light fw-bold px-4 py-2">Güncelle</button>
+        <button type="button" onclick="handleDeleteAboutMe(@Model.Id)" class="btn btn-danger text-light fw-bold px-5 py-2">Sil</button>
+    </div>
+</div>

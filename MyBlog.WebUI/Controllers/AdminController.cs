@@ -88,57 +88,49 @@ namespace MyBlog.WebUI.Controllers
 
         #region About Me
 
-        public async Task<IActionResult> AboutMeList(string? message = null, bool success = false)
-        {
-            TempData["Message"] = message;
-            TempData["MessageType"] = success ? "success" : "error";
-
-            return View(await _aboutMeService.GetAllAsync());
-        } 
-
-        public IActionResult AddAboutMe(string? message = null, bool success = false)
-        {
-            TempData["Message"] = message;
-            TempData["MessageType"] = success ? "success" : "error";
-
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> AddAboutMe(AboutMe aboutMe)
         {
             if (!ModelState.IsValid)
-                return View();
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
 
             var result = await _aboutMeService.AddAsync(aboutMe);
-            return RedirectToAction(result.Success ? nameof(AboutMeList) : nameof(AddAboutMe), new { message = result.Message, success = result.Success });
-        }
-
-        public async Task<IActionResult> UpdateAboutMe(int id, string? message = null, bool success = false)
-        {
-            TempData["Message"] = message;
-            TempData["MessageType"] = success ? "success" : "error";
-
-            return View(await _aboutMeService.GetByIdAsync(id));
+            var data = await RenderPartialViewToString("Components/_AdminLayoutAboutMeUpdate/Default", aboutMe);
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateAboutMe(AboutMe aboutMe)
         {
             if (!ModelState.IsValid)
-                return View(aboutMe);
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
 
             var result = await _aboutMeService.UpdateAsync(aboutMe);
-            if (result.Success)
-                return RedirectToAction(nameof(AboutMeList), new { message = result.Message, success = result.Success });
+            var data = await RenderPartialViewToString("Components/_AdminLayoutAboutMeUpdate/Default", aboutMe);
 
-            return RedirectToAction(nameof(UpdateAboutMe), new { id = aboutMe.Id, message = result.Message, success = result.Success });
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
         public async Task<IActionResult> DeleteAboutMe(int id)
         {
             var result = await _aboutMeService.DeleteAsync(id);
-            return RedirectToAction(nameof(AboutMeList), new { message = result.Message, success = result.Success });
+            var data = await RenderPartialViewToString("Components/_AdminLayoutAboutMeModal/Default", new AboutMe { HomeId = 1 });
+
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
         #endregion
@@ -171,6 +163,5 @@ namespace MyBlog.WebUI.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
-
     }
 }

@@ -7,7 +7,7 @@
 
 <div>
     <input type="hidden" id="homeIdInput" value="@Model.Id" />
-  
+
     <div class="border border-top border-dark mb-3"></div>
     <div class="d-flex flex-column gap-4" id="homeContainer">
         <div class="row">
@@ -16,27 +16,32 @@
                 <div id="summaryContainer">
                     @{
                         if (Model.Summary == null)
-                            await Html.RenderPartialAsync("Components/_AdminLayoutSummaryModal/Default", new Summary { HomeId = 1 });
+                            await Html.RenderPartialAsync("Components/_AdminLayoutSummaryModal/Default", new Summary { HomeId = Model.Id });
                         else
                             await Html.RenderPartialAsync("Components/_AdminLayoutSummaryUpdate/Default", Model.Summary);
                     }
                 </div>
-
                 <div class="border border-top border-secondary-subtle mt-3"></div>
             </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <h4 class="text-dark">Hakkımda</h4>
                 <div id="aboutMeContainer">
                     @{
-
+                        if (Model.AboutMe == null)
+                            await Html.RenderPartialAsync("Components/_AdminLayoutAboutMeModal/Default", new AboutMe { HomeId = Model.Id });
+                        else
+                            await Html.RenderPartialAsync("Components/_AdminLayoutAboutMeUpdate/Default", Model.AboutMe);
                     }
                 </div>
+                <div class="border border-top border-secondary-subtle mt-3"></div>
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         function handleAddSummary() {
             $('#summaryModalForm').on('submit', function (e) {
@@ -54,7 +59,7 @@
 
                             document.querySelector("#btnCloseSummaryModal").click();
                             document.querySelector("#summaryContainer").innerHTML = response.data;
-                        } 
+                        }
                         else {
                             showValidationErrors("summaryModalForm", response.errors);
                         }
@@ -81,7 +86,7 @@
                             window.userAlert(response.message, response.messageType);
 
                             document.querySelector("#summaryContainer").innerHTML = response.data;
-                        } 
+                        }
                         else {
                             showValidationErrors("summaryUpdateForm", response.errors);
                         }
@@ -111,7 +116,82 @@
             });
         }
     </script>
-    
+
+    <script>
+        function handleAddAboutMe() {
+            $('#aboutMeModalForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddAboutMe", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#btnCloseAboutMeModal").click();
+                            document.querySelector("#aboutMeContainer").innerHTML = response.data;
+                        }
+                        else {
+                            showValidationErrors("aboutMeModalForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            $('#aboutMeModalForm').submit();
+        }
+
+        function handleUpdateAboutMe() {
+            $('#aboutMeUpdateForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UpdateAboutMe", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#aboutMeContainer").innerHTML = response.data;
+                        }
+                        else {
+                            showValidationErrors("aboutMeUpdateForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            $('#aboutMeUpdateForm').submit();
+        }
+
+        function handleDeleteAboutMe(id) {
+            const formData = new FormData();
+            formData.append("id", id);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteAboutMe", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#aboutMeContainer").innerHTML = response.data;
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+    </script>
+
     <script>
         function showValidationErrors(id, errors) {
             $(`#${id} span[data-valmsg-for]`).each(function () {

@@ -1,0 +1,28 @@
+﻿@model AboutMe
+
+<button type="button" class="btn btn-primary text-light px-4 py-2 mt-3" data-bs-toggle="modal" data-bs-target="#addAboutMeModal">Hakkımda Ekle</button>
+
+<div class="modal fade" id="addAboutMeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Hakkımda Ekleme</h1>
+                <button type="button" class="btn-close" id="btnCloseAboutMeModal" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="aboutMeModalForm" class="d-flex flex-column gap-2">
+                    <input type="hidden" asp-for="HomeId" value="@Model.HomeId"></input>
+                    <div class="form-group">
+                        <label asp-for="Description" class="text-dark fw-bold">Açıklama</label>
+                        <textarea class="form-control" asp-for="Description"> </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" onclick="handleAddAboutMe()" class="btn btn-primary text-light">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
