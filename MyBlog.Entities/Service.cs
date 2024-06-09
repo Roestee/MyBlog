@@ -16,7 +16,7 @@ namespace MyBlog.Entities
         public string Description { get; set; }
 
         [MaxLength(150, ErrorMessage = "Başlık 150 karakteri geçemez!")]
-        public string Icon { get; set; }
+        public string? Icon { get; set; }
 
         public virtual MyService? MyService{ get; set; }
     }

@@ -1,0 +1,10 @@
+﻿@model MyService
+
+<div class="row gap-2">
+    @{
+        foreach (var service in Model.Services)
+        {
+            await Html.RenderPartialAsync("Components/_AdminLayoutServiceUpdate/Default", service);
+        }
+    }
+</div>

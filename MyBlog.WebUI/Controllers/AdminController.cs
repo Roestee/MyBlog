@@ -16,6 +16,8 @@ namespace MyBlog.WebUI.Controllers
         private readonly ISkillService _skillService;
         private readonly IEducationService _educationService;
         private readonly IExperienceService _experienceService;
+        private readonly IServiceService _serviceService;
+        private readonly IMyServiceService _myServicesService;
 
         public AdminController(
             ICompositeViewEngine viewEngine,
@@ -24,7 +26,9 @@ namespace MyBlog.WebUI.Controllers
             IAboutMeService aboutMeService,
             ISkillService skillService, 
             IEducationService educationService,
-            IExperienceService experienceService)
+            IExperienceService experienceService, 
+            IServiceService serviceService, 
+            IMyServiceService myServicesService)
         {
             _viewEngine = viewEngine;
             _homeService = homeService;
@@ -33,6 +37,8 @@ namespace MyBlog.WebUI.Controllers
             _skillService = skillService;
             _educationService = educationService;
             _experienceService = experienceService;
+            _serviceService = serviceService;
+            _myServicesService = myServicesService;
         }
 
         public IActionResult Index()
@@ -213,6 +219,54 @@ namespace MyBlog.WebUI.Controllers
         {
             var result = await _experienceService.DeleteAsync(id);
             var data = await RenderPartialViewToString("Components/_AdminLayoutExperienceList/Default", await _aboutMeService.GetByIdAsync(aboutMeId));
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        #endregion
+
+        #region My Services
+
+        [HttpPost]
+        public async Task<IActionResult> AddService(Service service)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _serviceService.AddAsync(service);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutServices/Default", await _myServicesService.GetByIdAsync(service.MyServicesId));
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateService(Service service)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _serviceService.UpdateAsync(service);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutServices/Default", await _myServicesService.GetByIdAsync(service.MyServicesId));
+
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteService(int id, int myServiceId)
+        {
+            var result = await _serviceService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutServices/Default", await _myServicesService.GetByIdAsync(myServiceId));
             return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 

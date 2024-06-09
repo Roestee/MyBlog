@@ -1,0 +1,17 @@
+﻿@model Service
+
+<div class="card col-4 mt-3 position-relative">
+    <form class="card-body d-flex flex-column gap-3 justify-content-center" method="POST" id="serviceUpdateForm-@Model.Id">
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+        <input type="hidden" asp-for="MyServicesId" value="@Model.MyServicesId"/>
+        <i class="@Model.Icon"></i>
+        <input type="text" asp-for="Icon" value="@Model.Icon"/>
+        <input type="text" asp-for="Title" class="card-title">
+        <textarea class="card-text" asp-for="Description">@Model.Description</textarea>
+    </form>
+    <button onclick="handleUpdateService(@Model.Id)" class="btn btn-success px-4 py-2">Güncelle</button>
+    <button class="btn btn-danger border rounded-circle d-flex align-items-center justify-content-center position-absolute top-0 end-0 mt-2 me-2" style="width: 26px; height: 26px;"
+            onclick="handleDeleteService(@Model.Id, @Model.MyServicesId)">
+        <i class="fa-solid fa-x fa-xs text-light text-center"></i>
+    </button>
+</div>

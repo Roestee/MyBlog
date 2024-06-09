@@ -7,7 +7,6 @@
 
 <div>
     <input type="hidden" id="homeIdInput" value="@Model.Id" />
-
     <div class="border border-top border-dark mb-3"></div>
     <div class="d-flex flex-column gap-4" id="homeContainer">
         <div class="row">
@@ -38,6 +37,21 @@
                 <div class="border border-top border-secondary-subtle mt-4"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <h4 class="text-dark">Hizmetlerim</h4>
+                @{
+                    await Html.RenderPartialAsync("Components/_AdminLayoutServiceModal/Default", new Service { MyServicesId = Model.MyService.Id });
+                }
+                <div id="serviceContainer">
+                    @{
+                        if (Model.MyService is { Services: not null })
+                            await Html.RenderPartialAsync("Components/_AdminLayoutServices/Default", Model.MyService);
+                    }
+                </div>
+                <div class="border border-top border-secondary-subtle mt-4"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -48,29 +62,29 @@
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddSummary", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddSummary", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#btnCloseSummaryModal").click();
-                            document.querySelector("#summaryContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("summaryModalForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#btnCloseSummaryModal").click();
+                                document.querySelector("#summaryContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("summaryModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -80,28 +94,28 @@
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("UpdateSummary", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("UpdateSummary", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#summaryContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("summaryUpdateForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#summaryContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("summaryUpdateForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -116,11 +130,11 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#summaryContainer").innerHTML = response.data;
                 },
-                error: function (xhr, status, error) { }
+                error: function(xhr, status, error) {}
             });
         }
     </script>
@@ -131,29 +145,29 @@
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddAboutMe", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddAboutMe", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#btnCloseAboutMeModal").click();
-                            document.querySelector("#aboutMeContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("aboutMeModalForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#btnCloseAboutMeModal").click();
+                                document.querySelector("#aboutMeContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("aboutMeModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -163,28 +177,28 @@
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("UpdateAboutMe", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("UpdateAboutMe", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#aboutMeContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("aboutMeUpdateForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#aboutMeContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("aboutMeUpdateForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -199,11 +213,11 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#aboutMeContainer").innerHTML = response.data;
                 },
-                error: function (xhr, status, error) { }
+                error: function(xhr, status, error) {}
             });
         }
 
@@ -212,29 +226,29 @@
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddSkill", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddSkill", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#btnCloseSkillModal").click();
-                            document.querySelector("#skillContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("skillModalForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#btnCloseSkillModal").click();
+                                document.querySelector("#skillContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("skillModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -250,42 +264,42 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#skillContainer").innerHTML = response.data;
                 },
-                error: function (xhr, status, error) { }
+                error: function(xhr, status, error) {}
             });
         }
-        
+
         function handleAddEducation() {
             const form = $('#educationModalForm');
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddEducation", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddEducation", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#btnCloseEducationModal").click();
-                            document.querySelector("#educationContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("educationModalForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#btnCloseEducationModal").click();
+                                document.querySelector("#educationContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("educationModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -301,11 +315,11 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#educationContainer").innerHTML = response.data;
                 },
-                error: function (xhr, status, error) { }
+                error: function(xhr, status, error) {}
             });
         }
 
@@ -314,29 +328,29 @@
 
             form.off('submit');
 
-            form.on('submit', function (e) {
-                e.preventDefault();
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
 
-                const formData = $(this).serialize();
+                    const formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddExperience", "Admin")',
-                    data: formData,
-                    success: function (response) {
-                        if (response.isValid) {
-                            window.userAlert(response.message, response.messageType);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddExperience", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
 
-                            document.querySelector("#btnCloseExperienceModal").click();
-                            document.querySelector("#experienceContainer").innerHTML = response.data;
-                        }
-                        else {
-                            showValidationErrors("experienceModalForm", response.errors);
-                        }
-                    },
-                    error: function (xhr, status, error) { }
+                                document.querySelector("#btnCloseExperienceModal").click();
+                                document.querySelector("#experienceContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("experienceModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
                 });
-            });
 
             form.submit();
         }
@@ -352,11 +366,11 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#experienceContainer").innerHTML = response.data;
                 },
-                error: function (xhr, status, error) { }
+                error: function(xhr, status, error) {}
             });
         }
 
@@ -366,17 +380,102 @@
     </script>
 
     <script>
+        function handleAddService() {
+            const form = $('#serviceModalForm');
+
+            form.off('submit');
+
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddService", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
+
+                                document.querySelector("#btnCloseServiceModal").click();
+                                document.querySelector("#serviceContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("serviceModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                });
+
+            form.submit();
+        }
+
+        function handleUpdateService(id) {
+            const form = $(`#serviceUpdateForm-${id}`);
+
+            form.off('submit');
+
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("UpdateService", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
+
+                                document.querySelector("#serviceContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("serviceUpdateForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                });
+
+            form.submit();
+        }
+
+        function handleDeleteService(id, myServiceId) {
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("myServiceId", myServiceId);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteService", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#serviceContainer").innerHTML = response.data;
+                },
+                error: function(xhr, status, error) {}
+            });
+        }
+    </script>
+
+    <script>
         function showValidationErrors(id, errors) {
-            $(`#${id} span[data-valmsg-for]`).each(function () {
+            $(`#${id} span[data-valmsg-for]`).each(function() {
                 $(this).text('');
             });
 
-            $.each(errors, function (key, errorMessages) {
-                const $span = $(`#${id} span[data-valmsg-for='${key}']`);
-                if ($span.length > 0) {
-                    $span.text(errorMessages.join(', '));
-                }
-            });
+            $.each(errors,
+                function(key, errorMessages) {
+                    const $span = $(`#${id} span[data-valmsg-for='${key}']`);
+                    if ($span.length > 0) {
+                        $span.text(errorMessages.join(', '));
+                    }
+                });
         }
     </script>
 }

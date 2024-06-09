@@ -1,0 +1,38 @@
+﻿@model Service
+
+<button type="button" class="btn btn-primary text-light px-4 py-2 mt-3" data-bs-toggle="modal" data-bs-target="#addServiceModal">Hizmet Ekle</button>
+
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Hizmet Ekleme</h1>
+                <button type="button" class="btn-close" id="btnCloseServiceModal" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="serviceModalForm" class="d-flex flex-column gap-2">
+                    <input type="hidden" asp-for="MyServicesId" value="@Model.MyServicesId"></input>
+                    <div class="form-group">
+                        <label asp-for="Title" class="text-dark fw-bold">Başlık</label>
+                        <input type="text" class="form-control" asp-for="Title">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="text-dark fw-bold">Açıklama</label>
+                        <textarea class="form-control" asp-for="Description"> </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Icon" class="text-dark fw-bold">İkon</label>
+                        <textarea class="form-control" asp-for="Icon"> </textarea>
+                        <span asp-validation-for="Icon" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" onclick="handleAddService()" class="btn btn-primary text-light">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
