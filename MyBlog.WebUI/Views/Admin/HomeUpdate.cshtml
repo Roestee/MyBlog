@@ -52,6 +52,21 @@
                 <div class="border border-top border-secondary-subtle mt-4"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <h4 class="text-dark">İşlerim</h4>
+                @{
+                    await Html.RenderPartialAsync("Components/_AdminLayoutWorkModal/Default", new Work { MyWorksId = Model.MyWork.Id });
+                }
+                <div id="workContainer">
+                    @{
+                        if (Model.MyWork is { Works: not null })
+                            await Html.RenderPartialAsync("Components/_AdminLayoutWorks/Default", Model.MyWork);
+                    }
+                </div>
+                <div class="border border-top border-secondary-subtle mt-4"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -414,7 +429,7 @@
 
         function handleUpdateService(id) {
             const form = $(`#serviceUpdateForm-${id}`);
-
+          
             form.off('submit');
 
             form.on('submit',
@@ -457,6 +472,79 @@
                 success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#serviceContainer").innerHTML = response.data;
+                },
+                error: function(xhr, status, error) {}
+            });
+        }
+    </script>
+    
+    <script>
+        function uploadBgImage() {
+            const formData = new FormData();
+            const file = document.getElementById("workBgFileInput").files[0];
+            formData.append("file", file);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadBgImage", "Admin")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    window.userAlert(response.message, response.messageType);
+
+                    document.querySelector("#workModalBgUrlInput").value = response.bgUrl;
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+
+        function handleAddWork() {
+            const form = $('#workModalForm');
+
+            form.off('submit');
+
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddWork", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
+
+                                document.querySelector("#btnCloseWorkModal").click();
+                                document.querySelector("#workContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("workModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                });
+
+            form.submit();
+        }
+
+        function handleDeleteService(id, myWorkId) {
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("myWorkId", myWorkId);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteWork", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#workContainer").innerHTML = response.data;
                 },
                 error: function(xhr, status, error) {}
             });

@@ -1,0 +1,13 @@
+﻿@model Work
+
+<div class="card col-12 col-sm-5 col-md-3 mt-3 position-relative">
+    <img src="@Model.BackgroundImgUrl" class="card-img-top" alt="BackgroundImage">
+    <div class="card-body d-flex flex-column gap-3 justify-content-center">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Description</p>
+    </div>
+    <button class="btn btn-danger border rounded-circle d-flex align-items-center justify-content-center position-absolute top-0 end-0 mt-2 me-2" style="width: 26px; height: 26px;"
+            onclick="handleDeleteWork(@Model.Id, @Model.MyWorksId)">
+        <i class="fa-solid fa-x fa-xs text-light text-center"></i>
+    </button>
+</div>

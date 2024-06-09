@@ -1,4 +1,5 @@
-﻿using MyBlog.Business.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using MyBlog.Business.Abstract;
 using MyBlog.DataAccess.Abstract;
 using MyBlog.Entities;
 
@@ -15,7 +16,10 @@ namespace MyBlog.Business.Concrete
 
         public async Task<MyService> GetByIdAsync(int id)
         {
-            return await _myServiceRepository.GetByIdAsync(id);
+            var myService = _myServiceRepository.GetAllQueryable().
+                Where(x=>x.Id == id).
+                Include(x => x.Services);
+            return await myService.FirstOrDefaultAsync();
         }
     }
 }

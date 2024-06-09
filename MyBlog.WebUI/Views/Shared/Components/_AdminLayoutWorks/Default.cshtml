@@ -1,0 +1,10 @@
+﻿@model MyWork
+
+<div class="row justify-content-evenly">
+    @{
+        foreach (var work in Model.Works)
+        {
+            await Html.RenderPartialAsync("Components/_AdminLayoutWorkUpdate/Default", work);
+        }
+    }
+</div>

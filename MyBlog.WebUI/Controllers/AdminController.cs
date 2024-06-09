@@ -9,6 +9,7 @@ namespace MyBlog.WebUI.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ICompositeViewEngine _viewEngine;
         private readonly IHomeService _homeService;
         private readonly ISummaryService _summaryService;
@@ -18,18 +19,26 @@ namespace MyBlog.WebUI.Controllers
         private readonly IExperienceService _experienceService;
         private readonly IServiceService _serviceService;
         private readonly IMyServiceService _myServicesService;
+        private readonly IFileService _fileService;
+        private readonly IWorkService _workService;
+        private readonly IMyWorkService _myWorkService;
 
         public AdminController(
+            IWebHostEnvironment hostingEnvironment,
             ICompositeViewEngine viewEngine,
             IHomeService homeService,
             ISummaryService summaryService,
             IAboutMeService aboutMeService,
-            ISkillService skillService, 
+            ISkillService skillService,
             IEducationService educationService,
-            IExperienceService experienceService, 
-            IServiceService serviceService, 
-            IMyServiceService myServicesService)
+            IExperienceService experienceService,
+            IServiceService serviceService,
+            IMyServiceService myServicesService,
+            IFileService fileService, 
+            IWorkService workService, 
+            IMyWorkService myWorkService)
         {
+            _hostingEnvironment = hostingEnvironment;
             _viewEngine = viewEngine;
             _homeService = homeService;
             _summaryService = summaryService;
@@ -39,6 +48,9 @@ namespace MyBlog.WebUI.Controllers
             _experienceService = experienceService;
             _serviceService = serviceService;
             _myServicesService = myServicesService;
+            _fileService = fileService;
+            _workService = workService;
+            _myWorkService = myWorkService;
         }
 
         public IActionResult Index()
@@ -68,7 +80,7 @@ namespace MyBlog.WebUI.Controllers
 
             var result = await _summaryService.AddAsync(summary);
             var data = await RenderPartialViewToString("Components/_AdminLayoutSummaryUpdate/Default", summary);
-            return Json(new { isValid= true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
         [HttpPost]
@@ -87,7 +99,7 @@ namespace MyBlog.WebUI.Controllers
             var result = await _summaryService.UpdateAsync(summary);
             var data = await RenderPartialViewToString("Components/_AdminLayoutSummaryUpdate/Default", summary);
 
-            return Json( new {isValid = true, message= result.Message, messageType = result.Success ? "success": "error", data });
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
         public async Task<IActionResult> DeleteSummary(int id)
@@ -95,7 +107,7 @@ namespace MyBlog.WebUI.Controllers
             var result = await _summaryService.DeleteAsync(id);
             var data = await RenderPartialViewToString("Components/_AdminLayoutSummaryModal/Default", new Summary { HomeId = 1 });
 
-            return Json(new { message = result.Message, messageType = result.Success? "success": "error", data});
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
         #endregion
@@ -258,7 +270,8 @@ namespace MyBlog.WebUI.Controllers
             }
 
             var result = await _serviceService.UpdateAsync(service);
-            var data = await RenderPartialViewToString("Components/_AdminLayoutServices/Default", await _myServicesService.GetByIdAsync(service.MyServicesId));
+            var myServices = await _myServicesService.GetByIdAsync(service.MyServicesId);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutServices/Default", myServices);
 
             return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
@@ -267,6 +280,42 @@ namespace MyBlog.WebUI.Controllers
         {
             var result = await _serviceService.DeleteAsync(id);
             var data = await RenderPartialViewToString("Components/_AdminLayoutServices/Default", await _myServicesService.GetByIdAsync(myServiceId));
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        #endregion
+
+        #region My Works
+
+        public async Task<IActionResult> UploadBgImage(IFormFile file)
+        {
+            var bgUrl = await _fileService.FileSaveAsync(file, _hostingEnvironment.WebRootPath);
+
+            return Json(new{message = "Resim başarıyla yüklendi.", messageType = "success", bgUrl});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddWork(Work work)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _workService.AddAsync(work);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutWorks/Default", await _myWorkService.GetByIdAsync(work.MyWorksId));
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteWork(int id, int myWorkId)
+        {
+            var result = await _workService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutWorks/Default", await _myWorkService.GetByIdAsync(myWorkId));
             return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 
