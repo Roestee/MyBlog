@@ -1,0 +1,18 @@
+﻿@model AboutMe
+
+<ol class="list-group list-group-numbered">
+    @foreach (var experience in Model.Experiences)
+    {
+        <li class="list-group-item d-flex align-items-start pe-5 position-relative">
+            <div class="d-flex flex-column gap-2 w-100 ps-2">
+                <div class="fw-bold">@experience.Title</div>
+                <p class="mb-0">@experience.JobStartDate.Year - @(experience.StillWorking? "Devam ediyor." : experience.JobEndDate.Value.Year)</p>
+                <span>@experience.Description</span>
+                <button class="btn btn-danger border rounded-circle d-flex align-items-center justify-content-center position-absolute top-0 end-0 mt-2 me-2" style="width: 26px; height: 26px;"
+                        onclick="handleDeleteExperience(@experience.Id, @experience.AboutMeId)">
+                    <i class="fa-solid fa-x fa-xs text-light text-center"></i>
+                </button>
+            </div>
+        </li>
+    }
+</ol>

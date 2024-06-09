@@ -33,6 +33,7 @@ namespace MyBlog.Business.DependencyResolvers.Autofac
             builder.RegisterType<SummaryManager>().As<ISummaryService>();
             builder.RegisterType<SkillManager>().As<ISkillService>();
             builder.RegisterType<EducationManager>().As<IEducationService>();
+            builder.RegisterType<ExperienceManager>().As<IExperienceService>();
         }
     }
 }

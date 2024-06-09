@@ -15,6 +15,7 @@ namespace MyBlog.WebUI.Controllers
         private readonly IAboutMeService _aboutMeService;
         private readonly ISkillService _skillService;
         private readonly IEducationService _educationService;
+        private readonly IExperienceService _experienceService;
 
         public AdminController(
             ICompositeViewEngine viewEngine,
@@ -22,7 +23,8 @@ namespace MyBlog.WebUI.Controllers
             ISummaryService summaryService,
             IAboutMeService aboutMeService,
             ISkillService skillService, 
-            IEducationService educationService)
+            IEducationService educationService,
+            IExperienceService experienceService)
         {
             _viewEngine = viewEngine;
             _homeService = homeService;
@@ -30,6 +32,7 @@ namespace MyBlog.WebUI.Controllers
             _aboutMeService = aboutMeService;
             _skillService = skillService;
             _educationService = educationService;
+            _experienceService = experienceService;
         }
 
         public IActionResult Index()
@@ -185,6 +188,31 @@ namespace MyBlog.WebUI.Controllers
         {
             var result = await _educationService.DeleteAsync(id);
             var data = await RenderPartialViewToString("Components/_AdminLayoutEducationList/Default", await _aboutMeService.GetByIdAsync(aboutMeId));
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddExperience(Experience experience)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _experienceService.AddAsync(experience);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutExperienceList/Default", await _aboutMeService.GetByIdAsync(experience.AboutMeId));
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteExperience(int id, int aboutMeId)
+        {
+            var result = await _experienceService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutExperienceList/Default", await _aboutMeService.GetByIdAsync(aboutMeId));
             return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 

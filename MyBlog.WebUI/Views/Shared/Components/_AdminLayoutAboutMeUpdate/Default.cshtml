@@ -31,7 +31,7 @@
             }
         </div>
     </div>
-    
+
     <div class="d-flex flex-column gap-3 mt-3">
         <h5 class="my-0">Eğitim</h5>
         <div>
@@ -42,6 +42,20 @@
         <div id="educationContainer">
             @{
                 await Html.RenderPartialAsync("Components/_AdminLayoutEducationList/Default", Model);
+            }
+        </div>
+    </div>
+
+    <div class="d-flex flex-column gap-3 mt-3">
+        <h5 class="my-0">İş Tecrübeleri</h5>
+        <div>
+            @{
+                await Html.RenderPartialAsync("Components/_AdminLayoutExperienceModal/Default", new Experience { AboutMeId = Model.Id });
+            }
+        </div>
+        <div id="experienceContainer">
+            @{
+                await Html.RenderPartialAsync("Components/_AdminLayoutExperienceList/Default", Model);
             }
         </div>
     </div>

@@ -308,6 +308,61 @@
                 error: function (xhr, status, error) { }
             });
         }
+
+        function handleAddExperience() {
+            const form = $('#experienceModalForm');
+
+            form.off('submit');
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddExperience", "Admin")',
+                    data: formData,
+                    success: function (response) {
+                        if (response.isValid) {
+                            window.userAlert(response.message, response.messageType);
+
+                            document.querySelector("#btnCloseExperienceModal").click();
+                            document.querySelector("#experienceContainer").innerHTML = response.data;
+                        }
+                        else {
+                            showValidationErrors("experienceModalForm", response.errors);
+                        }
+                    },
+                    error: function (xhr, status, error) { }
+                });
+            });
+
+            form.submit();
+        }
+
+        function handleDeleteExperience(id, aboutMeId) {
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("aboutMeId", aboutMeId);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteExperience", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#experienceContainer").innerHTML = response.data;
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+
+        function onStillWorkingInputChange(checked) {
+            checked ? $('#stillWorkingGroupOnModal').hide() : $('#stillWorkingGroupOnModal').show();
+        }
     </script>
 
     <script>
