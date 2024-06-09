@@ -22,7 +22,7 @@ namespace MyBlog.Business.Concrete
                 await file.CopyToAsync(stream);
             }
 
-            return "~/images/" + fileName;
+            return "/images/" + fileName;
         }
 
         public string FileSave(IFormFile file, string filePath)
