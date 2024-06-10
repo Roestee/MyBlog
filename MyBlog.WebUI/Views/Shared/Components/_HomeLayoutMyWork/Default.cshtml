@@ -2,22 +2,22 @@
 
 <div id="portfolio">
     <div class="container">
-        <h1 class="subTitle">My Work</h1>
+        <h1 class="subTitle">Çalışmalarım</h1>
         <div class="workList">
             @{
                 foreach (var work in Model.Works)
                 {
                     <div class="work">
-                        <img src="@work.BackgroundImgUrl" alt=""/>
+                        <img src="@work.BackgroundImgUrl" alt="Background Image"/>
                         <div class="layer">
                             <h3>@work.Title</h3>
                             <p>@work.Description</p>
-                            <a href="#">@work.WorkUrl</a>
+                            <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                     </div>
                 }
             }
         </div>
-        <a href="#" class="btn">See more</a>
+        <a href="#" class="btn text-light">See more</a>
     </div>
 </div>

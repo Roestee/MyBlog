@@ -7,12 +7,12 @@
                 <img src="images/user.JPG" />
             </div>
             <div class="aboutCol2">
-                <h1 class="subTitle">About Me</h1>
+                <h1 class="subTitle">Hakkımda</h1>
                 <p>@Model.Description</p>
                 <div class="tabTitle">
-                    <p class="tabLinks activeLink" onclick="OpenTab('skills')">Skills</p>
-                    <p class="tabLinks" onclick="OpenTab('experience')">Experience</p>
-                    <p class="tabLinks" onclick="OpenTab('education')">Education</p>
+                    <p class="tabLinks activeLink" onclick="OpenTab('skills')">Yetenekler</p>
+                    <p class="tabLinks" onclick="OpenTab('experience')">Tecrübeler</p>
+                    <p class="tabLinks" onclick="OpenTab('education')">Eğitim</p>
                 </div>
                 <div class="tabContents activeTab" id="skills">
                     <ul>
@@ -20,10 +20,10 @@
                             foreach (var skill in Model.Skills)
                             {
                                 <li class="d-flex flex-column gap-2">
-                                    <h6>@skill.Title</h6>
+                                    <h6 class="fw-bold text-light">@skill.Title</h6>
                                     <p>@skill.Description</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="@skill.Rate" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: @skill.Rate%"></div>
+                                    <div class="progress w-75" role="progressbar" aria-valuenow="@skill.Rate" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: @skill.Rate%">@skill.Rate%</div>
                                     </div>
                                 </li>
                             }
@@ -36,8 +36,8 @@
                             foreach (var experience in Model.Experiences)
                             {
                                 <li class="d-flex flex-column gap-2">
-                                    <span>@(experience.JobStartDate.ToShortDateString() + "-" + (experience.StillWorking ? "Current" : experience.JobEndDate.Value.ToShortDateString()))</span>
-                                    <h6>@experience.Title</h6>
+                                    <span class="fw-bold">@($"{experience.JobStartDate.Month:00}.{experience.JobStartDate.Year}" + "-" + (experience.StillWorking ? "Current" : ($"{experience.JobEndDate.Value.Month:00}.{experience.JobEndDate.Value.Year}")))</span>
+                                    <h6 class="fw-bold text-light">@experience.Title</h6>
                                     <p>@experience.Description</p>
                                 </li>
                             }
@@ -50,9 +50,9 @@
                             foreach (var education in Model.Educations)
                             {
                                 <li class="d-flex flex-column gap-2">
-                                    <span>@(education.StartDate.ToShortDateString() + "-" + education.EndDate.ToShortDateString())</span>
-                                    <h6>@education.SchoolName</h6>
-                                    <p>@education.Title</p>
+                                    <span class="fw-bold">@($"{education.StartDate.Month:00}.{education.StartDate.Year}" + "-" + $"{education.EndDate.Month:00}.{education.EndDate.Year}")</span>
+                                    <h6 class="fw-bold text-light">@education.Title</h6>
+                                    <p>@education.SchoolName</p>
                                 </li>
                             }
                         }
