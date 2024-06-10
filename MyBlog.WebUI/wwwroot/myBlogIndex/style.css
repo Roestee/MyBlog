@@ -206,7 +206,7 @@ nav ul li {
 
 .workList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 0.3fr));
+    grid-template-columns: repeat(3, minmax(250px, 0.3fr)) !important;
     grid-gap: 40px;
     margin-top: 50px;
 }
@@ -214,7 +214,7 @@ nav ul li {
 .work {
     border-radius: 10px;
     position: relative;
-    max-width: 0.3fr !important; 
+    max-width: 0.3fr;
     overflow: hidden;
 }
 

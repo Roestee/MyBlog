@@ -11,11 +11,11 @@
                     @{
                         foreach (var socialMedia in Model.SocialMedias)
                         {
-                            <a href="@socialMedia.Url">@socialMedia.Icon</a>
+                            <a href="@socialMedia.Url" target="_blank"><i class="@socialMedia.Icon"></i></a>
                         }
                     }
                 </div>
-                <a href="@Model.CVUrl" class="btn btn2">Download CV</a>
+                <a href="@Model.CVUrl" class="btn btn2 text-light">Download CV</a>
             </div>
             <div class="contanctRight">
                 <form action="">
@@ -27,7 +27,7 @@
                     <textarea name="Message"
                               rows="6"
                               placeholder="Your Message"></textarea>
-                    <button type="submit" class="btn btn2">Submit</button>
+                    <button type="submit" class="btn btn2 text-light">Submit</button>
                 </form>
             </div>
         </div>
