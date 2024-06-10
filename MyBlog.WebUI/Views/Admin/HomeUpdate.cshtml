@@ -67,6 +67,20 @@
                 <div class="border border-top border-secondary-subtle mt-4"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <h4 class="text-dark">İletişim</h4>
+                <div id="contactMeContainer">
+                    @{
+                        if (Model.ContactMe == null)
+                            await Html.RenderPartialAsync("Components/_AdminLayoutContactMeModal/Default", new ContactMe { HomeId = Model.Id });
+                        else
+                            await Html.RenderPartialAsync("Components/_AdminLayoutContactMeUpdate/Default", Model.ContactMe);
+                    }
+                </div>
+                <div class="border border-top border-secondary-subtle mt-4"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -429,7 +443,7 @@
 
         function handleUpdateService(id) {
             const form = $(`#serviceUpdateForm-${id}`);
-          
+
             form.off('submit');
 
             form.on('submit',
@@ -477,7 +491,7 @@
             });
         }
     </script>
-    
+
     <script>
         function uploadBgImage() {
             const formData = new FormData();
@@ -490,12 +504,12 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function (response) {
+                success: function(response) {
                     window.userAlert(response.message, response.messageType);
 
                     document.querySelector("#workModalBgUrlInput").value = response.bgUrl;
                 },
-                error: function (xhr, status, error) { }
+                error: function(xhr, status, error) {}
             });
         }
 
@@ -545,6 +559,160 @@
                 success: function(response) {
                     window.userAlert(response.message, response.messageType);
                     document.querySelector("#workContainer").innerHTML = response.data;
+                },
+                error: function(xhr, status, error) {}
+            });
+        }
+    </script>
+
+    <script>
+        function uploadCV() {
+            const formData = new FormData();
+            const file = document.getElementById("cvFileInput").files[0];
+            formData.append("file", file);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadCv", "Admin")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    window.userAlert(response.message, response.messageType);
+
+                    document.querySelector("#contactMeModalCvUrlInput").value = response.cvUrl;
+                },
+                error: function(xhr, status, error) {}
+            });
+        }
+
+        function handleAddContactMe() {
+            const form = $('#contactMeModalForm');
+
+            form.off('submit');
+
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddContactMe", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
+
+                                document.querySelector("#btnCloseContactMeModal").click();
+                                document.querySelector("#contactMeContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("contactMeModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                });
+
+            form.submit();
+        }
+
+        function handleUpdateContactMe() {
+            const form = $('#contactMeUpdateForm');
+
+            form.off('submit');
+
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("UpdateContactMe", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
+
+                                document.querySelector("#contactMeContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("contactMeUpdateForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                });
+
+            form.submit();
+        }
+
+        function handleDeleteContactMe(id) {
+            const formData = new FormData();
+            formData.append("id", id);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteContactMe", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#contactMeContainer").innerHTML = response.data;
+                },
+                error: function(xhr, status, error) {}
+            });
+        }
+
+        function handleAddSocialMedia() {
+            const form = $('#socialMediaModalForm');
+
+            form.off('submit');
+
+            form.on('submit',
+                function(e) {
+                    e.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddSocialMedia", "Admin")',
+                        data: formData,
+                        success: function(response) {
+                            if (response.isValid) {
+                                window.userAlert(response.message, response.messageType);
+
+                                document.querySelector("#btnCloseSocialMediaModal").click();
+                                document.querySelector("#socialMediaContainer").innerHTML = response.data;
+                            } else {
+                                showValidationErrors("socialMediaModalForm", response.errors);
+                            }
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                });
+
+            form.submit();
+        }
+
+        function handleDeleteSocialMedia(id, contactMeId) {
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("contactMeId", contactMeId);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteSocialMedia", "Admin")',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.userAlert(response.message, response.messageType);
+                    document.querySelector("#socialMediaContainer").innerHTML = response.data;
                 },
                 error: function(xhr, status, error) {}
             });

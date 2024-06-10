@@ -22,6 +22,8 @@ namespace MyBlog.WebUI.Controllers
         private readonly IFileService _fileService;
         private readonly IWorkService _workService;
         private readonly IMyWorkService _myWorkService;
+        private readonly IContactMeService _contactMeService;
+        private readonly ISocialMediaService _socialMediaService;
 
         public AdminController(
             IWebHostEnvironment hostingEnvironment,
@@ -36,7 +38,9 @@ namespace MyBlog.WebUI.Controllers
             IMyServiceService myServicesService,
             IFileService fileService, 
             IWorkService workService, 
-            IMyWorkService myWorkService)
+            IMyWorkService myWorkService,
+            IContactMeService contactMeService,
+            ISocialMediaService socialMediaService)
         {
             _hostingEnvironment = hostingEnvironment;
             _viewEngine = viewEngine;
@@ -51,6 +55,8 @@ namespace MyBlog.WebUI.Controllers
             _fileService = fileService;
             _workService = workService;
             _myWorkService = myWorkService;
+            _contactMeService = contactMeService;
+            _socialMediaService = socialMediaService;
         }
 
         public IActionResult Index()
@@ -289,7 +295,7 @@ namespace MyBlog.WebUI.Controllers
 
         public async Task<IActionResult> UploadBgImage(IFormFile file)
         {
-            var bgUrl = await _fileService.FileSaveAsync(file, _hostingEnvironment.WebRootPath);
+            var bgUrl = await _fileService.FileSaveAsync(file, _hostingEnvironment.WebRootPath, "images");
 
             return Json(new{message = "Resim başarıyla yüklendi.", messageType = "success", bgUrl});
         }
@@ -316,6 +322,87 @@ namespace MyBlog.WebUI.Controllers
         {
             var result = await _workService.DeleteAsync(id);
             var data = await RenderPartialViewToString("Components/_AdminLayoutWorks/Default", await _myWorkService.GetByIdAsync(myWorkId));
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        #endregion
+
+        #region Contact Me
+
+        public async Task<IActionResult> UploadCv(IFormFile file)
+        {
+            var cvUrl = await _fileService.FileSaveAsync(file, _hostingEnvironment.WebRootPath, "documents");
+
+            return Json(new { message = "CV başarıyla yüklendi.", messageType = "success", cvUrl });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddContactMe(ContactMe contactMe)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _contactMeService.AddAsync(contactMe);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutContactMeUpdate/Default", contactMe);
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateContactMe(ContactMe contactMe)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _contactMeService.UpdateAsync(contactMe);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutContactMeUpdate/Default", contactMe);
+
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteContactMe(int id)
+        {
+            var result = await _contactMeService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutContactMeModal/Default", new ContactMe() { HomeId = 1 });
+
+            return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSocialMedia(SocialMedia socialMedia)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return Json(new { isValid = false, errors });
+            }
+
+            var result = await _socialMediaService.AddAsync(socialMedia);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutSocialMediaList/Default", await _contactMeService.GetByIdAsync(socialMedia.ContactMeId));
+            return Json(new { isValid = true, message = result.Message, messageType = result.Success ? "success" : "error", data });
+        }
+
+        public async Task<IActionResult> DeleteSocialMedia(int id, int contactMeId)
+        {
+            var result = await _socialMediaService.DeleteAsync(id);
+            var data = await RenderPartialViewToString("Components/_AdminLayoutSocialMediaList/Default", await _contactMeService.GetByIdAsync(contactMeId));
             return Json(new { message = result.Message, messageType = result.Success ? "success" : "error", data });
         }
 

@@ -12,17 +12,17 @@ namespace MyBlog.Business.Concrete
         private const string FtpUserName = "ofistaki";
         private const string FtpPassword = "SSii8501.DD,";
 
-        public async Task<string> FileSaveAsync(IFormFile file, string rootPath)
+        public async Task<string> FileSaveAsync(IFormFile file, string rootPath, string folderName)
         {
             var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-            var filePath = Path.Combine(rootPath, "images", fileName);
+            var filePath = Path.Combine(rootPath, folderName, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            return "/images/" + fileName;
+            return $"/{folderName}/{fileName}";
         }
 
         public string FileSave(IFormFile file, string filePath)

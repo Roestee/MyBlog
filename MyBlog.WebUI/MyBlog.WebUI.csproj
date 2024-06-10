@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\myBlogIndex\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\documents\" />
   </ItemGroup>
 
   <ItemGroup>

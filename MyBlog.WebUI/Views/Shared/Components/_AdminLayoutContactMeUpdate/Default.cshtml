@@ -1,0 +1,42 @@
+﻿@model ContactMe
+
+<div class="d-flex flex-column gap-3">
+    <form method="POST" id="contactMeUpdateForm" class="d-flex flex-column gap-2">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="HomeId" value="@Model.HomeId"></input>
+        <input type="hidden" asp-for="CVUrl" value="@Model.CVUrl"></input>
+        <div class="row mx-0 mx-md-1 gap-2 align-items-center">
+            <label asp-for="Email" class="col-12 col-md-4 col-xl-3 px-0 px-md-2 text-dark fw-bold">Email</label>
+            <div class="col-12 col-md-8 col-xl-9 text-dark w-md-auto px-0 d-flex flex-column">
+                <input type="email" asp-for="Email" class="w-100 px-2 py-1">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mx-0 mx-md-1 gap-2 align-items-center">
+            <label asp-for="Phone" class="col-12 col-md-4 col-xl-3 px-0 px-md-2 text-dark fw-bold">Telefon</label>
+            <div class="col-12 col-md-8 col-xl-9 text-dark w-md-auto px-0 d-flex flex-column">
+                <input type="text" asp-for="Phone" class="w-100 px-2 py-1">
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+        <button type="button" onclick="handleUpdateContactMe()" class="btn btn-warning text-light fw-bold px-4 py-2">Güncelle</button>
+        <button type="button" onclick="handleDeleteContactMe(@Model.Id)" class="btn btn-danger text-light fw-bold px-5 py-2">Sil</button>
+    </div>
+
+    <div class="d-flex flex-column gap-3 mt-3">
+        <h5 class="my-0">Sosyal Medya Hesapları</h5>
+        <div>
+            @{
+                await Html.RenderPartialAsync("Components/_AdminLayoutSocialMediaModal/Default", new SocialMedia() { ContactMeId = Model.Id });
+            }
+        </div>
+        <div id="socialMediaContainer">
+            @{
+                await Html.RenderPartialAsync("Components/_AdminLayoutSocialMediaList/Default", Model);
+            }
+        </div>
+    </div>
+</div>
