@@ -11,7 +11,7 @@ using MyBlog.DataAccess.Concrete.EntityFrameworkCore.Context;
 
 namespace MyBlog.DataAccess.Migrations
 {
-    [DbContext(typeof(MyBlogDbContext))]
+    [DbContext(typeof(RoesteBlogDbContext))]
     [Migration("20240609101204_homeUpdate1")]
     partial class homeUpdate1
     {

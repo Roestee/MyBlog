@@ -11,7 +11,7 @@ using MyBlog.DataAccess.Concrete.EntityFrameworkCore.Context;
 
 namespace MyBlog.DataAccess.Migrations
 {
-    [DbContext(typeof(MyBlogDbContext))]
+    [DbContext(typeof(RoesteBlogDbContext))]
     [Migration("20240608001044_dbInit")]
     partial class dbInit
     {

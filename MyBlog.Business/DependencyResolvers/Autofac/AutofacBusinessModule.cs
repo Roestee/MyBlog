@@ -23,6 +23,8 @@ namespace MyBlog.Business.DependencyResolvers.Autofac
             builder.RegisterType<EfSummaryRepository>().As<ISummaryRepository>();
             builder.RegisterType<EfWorkRepository>().As<IWorkRepository>();
             builder.RegisterType<EfHomeRepository>().As<IHomeRepository>();
+            builder.RegisterType<EfUserRepository>().As<IUserRepository>();
+            builder.RegisterType<EfRoleRepository>().As<IRoleRepository>();
 
             //Managers
             builder.RegisterType<AboutMeManager>().As<IAboutMeService>();
@@ -38,6 +40,9 @@ namespace MyBlog.Business.DependencyResolvers.Autofac
             builder.RegisterType<FileManager>().As<IFileService>();
             builder.RegisterType<WorkManager>().As<IWorkService>();
             builder.RegisterType<SocialMediaManager>().As<ISocialMediaService>();
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<RoleManager>().As<IRoleService>();
+            builder.RegisterType<AuthManager>().As<IAuthService>();
         }
     }
 }

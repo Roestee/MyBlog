@@ -5,9 +5,9 @@ using MyBlog.Entities;
 
 namespace MyBlog.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {
-    public class EfSocialMediaRepository : EfEntityRepositoryBase<SocialMedia, RoesteBlogDbContext>, ISocialMediaRepository
+    public class EfRoleRepository: EfEntityRepositoryBase<Role, RoesteBlogDbContext>, IRoleRepository
     {
-        public EfSocialMediaRepository(RoesteBlogDbContext context) : base(context)
+        public EfRoleRepository(RoesteBlogDbContext context) : base(context)
         {
         }
     }

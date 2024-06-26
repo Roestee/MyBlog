@@ -5,9 +5,9 @@ using MyBlog.Entities;
 
 namespace MyBlog.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {
-    public class EfExperienceRepository : EfEntityRepositoryBase<Experience, MyBlogDbContext>, IExperienceRepository
+    public class EfExperienceRepository : EfEntityRepositoryBase<Experience, RoesteBlogDbContext>, IExperienceRepository
     {
-        public EfExperienceRepository(MyBlogDbContext context) : base(context)
+        public EfExperienceRepository(RoesteBlogDbContext context) : base(context)
         {
         }
     }

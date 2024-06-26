@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -7,6 +8,7 @@ using MyBlog.Entities;
 
 namespace MyBlog.WebUI.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         private readonly IWebHostEnvironment _hostingEnvironment;

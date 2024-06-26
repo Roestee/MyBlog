@@ -3,7 +3,7 @@ using MyBlog.Entities;
 
 namespace MyBlog.DataAccess.Concrete.EntityFrameworkCore.Context
 {
-    public class MyBlogDbContext: DbContext
+    public class RoesteBlogDbContext: DbContext
     {
         public DbSet<AboutMe> AboutMes { get; set; }
         public DbSet<ContactMe> ContactMes { get; set; }
@@ -16,15 +16,17 @@ namespace MyBlog.DataAccess.Concrete.EntityFrameworkCore.Context
         public DbSet<Skill> Skills { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<Summary> Summaries { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=MyBlogDb;Trusted_Connection=True;Encrypt=False");
+            optionsBuilder.UseSqlServer("Server=77.245.159.10\\MSSQLSERVER2019;Database=RoesteBlogDb;User Id=roesteAdmin;Password=SSii8501.DD,;Encrypt=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MyBlogDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RoesteBlogDbContext).Assembly);
         }
     }
 }
