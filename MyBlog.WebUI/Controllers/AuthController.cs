@@ -43,6 +43,9 @@ namespace MyBlog.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(AuthModel model)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction(nameof(Register));
+
             var result = await _authService.Register(model.Email, model.Password);
 
             TempData["Message"] = result.Message;
@@ -56,6 +59,11 @@ namespace MyBlog.WebUI.Controllers
             HttpContext.Response.Cookies.Delete("jwtToken");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ResetPassword()
+        {
+            return View();
         }
     }
 }

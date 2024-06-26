@@ -11,5 +11,6 @@ namespace MyBlog.Business.Abstract
         Task<IDataResult> UpdateAsync(User entity);
         Task<IDataResult> DeleteAsync(int id);
         IQueryable<User> GetAllQueryable();
+        bool Any(Expression<Func<User, bool>> filter);
     }
 }

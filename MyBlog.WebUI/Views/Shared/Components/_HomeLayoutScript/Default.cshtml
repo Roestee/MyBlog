@@ -12,15 +12,15 @@
 
         event.currentTarget.classList.add("activeLink");
         document.getElementById(tabName).classList.add("activeTab");
+    }
 
+    function OpenMenu() {
         const sidemenu = document.getElementById("sideMenu");
+        sidemenu.style.right = "0";
+    }
 
-        function OpenMenu() {
-            sidemenu.style.right = "0";
-        }
-
-        function CloseMenu() {
-            sidemenu.style.right = "-200px";
-        }
+    function CloseMenu() {
+        const sidemenu = document.getElementById("sideMenu");
+        sidemenu.style.right = "-200px";
     }
 </script>

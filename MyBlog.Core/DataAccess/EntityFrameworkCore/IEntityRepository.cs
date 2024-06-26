@@ -13,5 +13,6 @@ namespace MyBlog.Core.DataAccess.EntityFrameworkCore
         Task DeleteAsync(T entity, CancellationToken c = default);
 
         IQueryable<T> GetAllQueryable();
+        bool Any(Expression<Func<T, bool>> filter);
     }
 }

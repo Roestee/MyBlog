@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="d-flex align-items-center justify-content-center py-5" id="loginContainer">
-    <div class="col-3 d-flex flex-column gap-4 bg-light px-5" style="border-radius: 2%; height: 60vh;">
+<div class="d-flex align-items-center justify-content-center py-5 authContainer">
+    <div class="d-flex flex-column gap-4 bg-light px-5" style="border-radius: 2%; width: 400px; height: 60vh;">
         <h1 class="mt-5 text-dark fw-bolder text-center fs-2">Giriş</h1>
         <form class="d-flex flex-column gap-4" asp-action="Login">
             <div class="d-flex flex-column">
@@ -27,8 +27,9 @@
                     <a asp-action="ResetPassword" class="fs-6 text-dark text-decoration-none">Şifrenizi mi unuttunuz?</a>
                 </div>
             </div>
-            <div class="w-100 d-flex justify-content-center mt-2">
-                <button type="submit" class="btn btn-danger m-0 px-0 py-2" style="width: 300px; border-radius: 25px;">Giriş Yap</button>
+            <div class="wrap-form-btn">
+                <div class="auth-form-bgbtn"></div>
+                <button type="submit">GİRİŞ YAP</button>
             </div>
         </form>
         <div class="d-flex flex-column gap-2 align-items-center">

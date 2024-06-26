@@ -39,7 +39,11 @@ namespace MyBlog.Business.Concrete
         public async Task<IDataResult> Register(string email, string password)
         {
             try
-            { 
+            {
+                if (_userService.Any(x => x.Email == email))
+                {
+                    return new ErrorResult("Bu mail adresi daha önce kullanılmış, farklı bir mail adresi deneyiniz!");
+                }
                 await _userService.AddAsync(GetAddedUser(email, password));
             }
             catch

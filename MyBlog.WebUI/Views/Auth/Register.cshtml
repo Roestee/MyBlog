@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="d-flex align-items-center justify-content-center py-5" id="loginContainer">
-    <div class="col-3 d-flex flex-column gap-4 bg-light px-5" style="border-radius: 2%; height: 60vh;">
-        <h1 class="mt-5 text-dark fw-bolder text-center fs-2">Kayıt Ol</h1>
+<div class="d-flex align-items-center justify-content-center py-5 authContainer">
+    <div class="d-flex flex-column gap-4 bg-light px-5" style="border-radius: 2%; width: 400px; height: 60vh;">
+        <h1 class="mt-5 text-dark fw-bolder text-center fs-2">Kayıt</h1>
         <form class="d-flex flex-column gap-4" asp-action="Register">
             <div class="d-flex flex-column">
                 <label asp-for="Email" class="text-dark fs-6">Email</label>
@@ -25,8 +25,9 @@
                     <span class="focus-input100"></span>
                 </div>
             </div>
-            <div class="w-100 d-flex justify-content-center mt-2">
-                <button type="submit" class="btn btn-danger m-0 px-0 py-2" style="width: 300px; border-radius: 25px;">Kayıt Ol</button>
+            <div class="wrap-form-btn">
+                <div class="auth-form-bgbtn"></div>
+                <button type="submit">KAYIT OL</button>
             </div>
         </form>
         <div class="d-flex flex-column gap-2 align-items-center">

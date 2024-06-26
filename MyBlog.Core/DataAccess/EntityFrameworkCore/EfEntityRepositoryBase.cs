@@ -56,5 +56,10 @@ namespace MyBlog.Core.DataAccess.EntityFrameworkCore
         {
             return _dbset.AsQueryable();
         }
+
+        public bool Any(Expression<Func<TEntity, bool>> filter)
+        {
+            return _dbset.Any(filter);
+        }
     }
 }

@@ -73,5 +73,10 @@ namespace MyBlog.Business.Concrete
         {
             return _userRepository.GetAllQueryable();
         }
+
+        public bool Any(Expression<Func<User, bool>> filter)
+        {
+            return _userRepository.Any(filter);
+        }
     }
 }

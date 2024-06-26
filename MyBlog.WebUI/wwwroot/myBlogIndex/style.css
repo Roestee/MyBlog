@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins-Regular", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
 }
 
 html {
@@ -38,10 +38,14 @@ nav ul li {
 
     nav ul li a {
         text-decoration: none;
-        color: #fff;
+        color: #d9d9d9;
         font-size: 18px;
         position: relative;
     }
+
+        nav ul li a:hover {
+            color: #d9d9d9;
+        }
 
         nav ul li a::after {
             content: "";
@@ -356,9 +360,13 @@ nav .fas {
     display: none;
 }
 
-#loginContainer {
+.authContainer {
     background-image: url(images/background2.jpg);
 }
+
+    .authContainer button {
+        transition: all 0.4s;
+    }
 
 .input_group {
     width: 100%;
@@ -366,9 +374,9 @@ nav .fas {
     border-bottom: 2px solid #d9d9d9;
 }
 
-.input_group i {
-    color: #7f7f7f;
-}
+    .input_group i {
+        color: #7f7f7f;
+    }
 
 .focus-input100 {
     position: absolute;
@@ -381,24 +389,88 @@ nav .fas {
     pointer-events: none;
 }
 
-.focus-input100::before {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #7f7f7f;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    transition: all 0.4s;
+    .focus-input100::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #7f7f7f;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+
+
+.authContainer .input_group input:focus + .focus-input100::before {
+    width: 100%;
 }
 
+.auth-form-bgbtn {
+    position: absolute;
+}
 
-#loginContainer .input_group input:focus + .focus-input100::before {
+.wrap-form-btn {
     width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.authContainer button {
+    font-size: 16px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+    background: none;
+    border: none;
+    color: #d9d9d9;
+}
+
+.authContainer a {
+    -webkit-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+    .authContainer a:hover {
+        transform: scale(1.08);
+    }
+
+.auth-form-bgbtn {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    background: linear-gradient(90deg, rgba(19,17,17,1) 0%, rgba(65,63,63,1) 33%, rgba(19,17,17,1) 51%, rgba(65,63,63,1) 79%, rgba(19,17,17,1) 100%);
+    width: 100%;
+    height: 80px;
+    border-radius: 25px;
+    -webkit-transition: all 0.25s;
+    -o-transition: all 0.25s;
+    -moz-transition: all 0.25s;
+    transition: all 0.25s;
+}
+
+.wrap-form-btn:hover .auth-form-bgbtn {
+    transform: scaleX(-1);
 }
 
 @media screen and (max-width: 800px) {
@@ -428,7 +500,7 @@ nav .fas {
     }
 
     nav ul {
-        background: #ff004f;
+        background: #04819F !important;
         position: fixed;
         top: 0;
         right: -200px;
@@ -479,5 +551,30 @@ nav .fas {
     .contanctLeft,
     .contanctRight {
         flex-basis: 100%;
+    }
+
+    .auth-form-bgbtn {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        background: linear-gradient(90deg, rgba(4, 129, 159, 1), rgba(255, 0, 79, 1)) !important;
+        width: 100%;
+        height: 100px;
+        border-radius: 25px;
+        -webkit-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+
+    .authContainer {
+        background-image: url(images/phoneBackground\ .jpg);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .copyright {
+        background: #0b1b30;
     }
 }
