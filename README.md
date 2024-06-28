@@ -9,9 +9,9 @@ Database -> Mssql,Security/Authentication -> JWT, Password Hashing, Dependincy I
 On frontend side asp.net core 8.0.4 MVC Css -> Bootstrap and Vanilla Css, Vanilla Javascript - Jquery - Ajax.,Notifications -> Toastr
 
 ## Contents
-- [🔒 Auth](#auth)
-- [🛠️ Admin Panel](#admin-panel)
-- [👥 User Side](#user-side)
+- [🔒 Auth](#-auth)
+- [🛠️ Admin Panel](#EF%B8%8F-admin-panel)
+- [👥 User Side](#-user-side)
 
 
 ## 🔒 Auth
