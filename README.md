@@ -10,7 +10,7 @@ On frontend side asp.net core 8.0.4 MVC Css -> Bootstrap and Vanilla Css, Vanill
 
 ## Contents
 - [🔒 Auth](#-auth)
-- [🛠️ Admin Panel](#EF%B8%8F-admin-panel)
+- [🛠️ Admin Panel](#%EF%B8%8F-admin-panel)
 - [👥 User Side](#-user-side)
 
 
