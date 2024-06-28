@@ -8,7 +8,7 @@ namespace MyBlog.Business.Concrete
     public class FileManager : IFileService
     {
         private const string FtpUrl = "ftp://ftp.ofistakipsistemi.com.tr";
-        private const string FtpFolderName = "documents";
+        private const string FtpFolderName = "blog-documents";
         private const string FtpUserName = "ofistaki";
         private const string FtpPassword = "SSii8501.DD,";
 
