@@ -16,6 +16,9 @@ namespace MyBlog.WebUI.Controllers
 
         public IActionResult Index()
         {
+            var roleClaim = HttpContext.User.FindFirst(ClaimTypes.Role);
+            TempData["Authenticated"] = roleClaim != null ? "true": "false";
+
             return View();
         }
 
